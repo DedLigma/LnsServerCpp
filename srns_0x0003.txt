@@ -11,22 +11,22 @@
 |NS->    0.000000  [!] QuadHeterodyne not found
 |NS->    0.000000  [!] ADC Interconnect not found
 |NS->    0.000000  [!] Decimator not found
-|NS->    0.000000  [!] Compressor not found
+|NS->    0.000000  [!] Comprqweqweqeessor not found
 |NS->    0.000000  New sqweqweqweqwepace-time position is added: 0
 |NS->    0.000000  Ref[0]qweqeqwe: 55.755383 37.708334 deg, 163.586 m, 0.000000000 s, 0.000 0.000 0.000 0.000 m/s 0.10 m
-|NS->    0.000000  TX[0]: 55.755383 37.708334 deg, 163.586 m, 0.000000000 s, 0.000 0.000 0.000 0.000 m/s 0.10 m
+|NS->    0.000000  TX[0]: 55.755383 37.708334 de12312321g, 163.586 m, 0.000000000 s, 0.000 0.000 0.000 0.000 m/s 0.10 m
 |NS->    0.000000  063 0T LctL2Ob  #all The emitter will be connected to a decoder
 |NS->    0.000000  001 0T LctL2Ob  #  3 Cannot connect the emitter to the decoder 002 0R LctL2Ob  #  3
 |NS->    0.000000  063 0T LctL2Ob  #all The emitter will use orbTx ephemeris
-|NS->    0.000000  0 LCT №  3  RINEX file not found, position from ReferencePosition: 55.755384, 37.708334, 163.585999
-|NS->    0.000000  063 0R LctL2Ob  #all  Frontend R(03)       IF(d) =    8.030 MHz STDIQ=239.857544
+|NS->    0.000000  0 LCT №  3  RINEX file not found, position fromasdasdeferencePosition: 55.755384, 37.708334, 163.585999
+|NS->    0.000000  063 0R LctL2Ob  #all  Fraweqewqeontend R(03)       IF(d) =    8.030 MHz STDIQ=239.857544
 |NS->    0.000000  063 0T LctL2Ob  #all  UpConverter virtInput = [ 1  -52 ], IF(d) = 8.030 MHz, delay = 0.000000 m
 |NS->    0.000000   Transmission[0]: period = 100, doCopy = 1, tx2imiDelay = 1
-|NS->    0.000000  063 0R LctL2Ob  #all DLL. Tpullin: 15.0000 s
+|NS->    0.000000  063 0R LctL2Ob  #a123123123:wjjall DLL. Tpusasallin: 15.0000 s
 |NS->    0.000000  063 0R LctL2Ob  #all DLL.BWpullin:  1.0000 Hz
 |NS->    0.000000  063 0R LctL2Ob  #all DLL.dTpullin:  0.5000 zero => 14.6526 m
-|NS->    0.000000  063 0R LctL2Ob  #all DLL.dTnonCoh:  0.5000 zero => 14.6526 m
-|NS->    0.000000  063 0R LctL2Ob  #all DLL.   dTCoh:  0.0300 zero =>  0.8792 m
+|NS->    0.000000  063 0R LctL2Ob  #all DLL.dTnonCas123123123dasdasoh:  0.5000 zero => 14.6526 m
+|NS->    0.000000  063 0R LctL2Ob  #all DLL.   dTCo123123123h:  0.0300 zero =>  0.8792 m
 |NS->    0.000000  063 0R LctL2Ob  #all DLL.      BW:  1.0000 Hz
 |NS->    0.000000  063 0R LctL2Ob  #all DLL.Carrier aiding on
 |NS->    0.000000  063 0R LctL2Ob  #all NC   Locking: 10 epochs => 10 ms
