@@ -1,9 +1,9 @@
 // #include "Headers.h"
 #include "FileWatcher.h"
+#include "JsonPicker.h"
 #include <cstdlib>
 #include <drogon/drogon.h>
 #include <string>
-#include <thread>
 
 typedef std::function<void(const drogon::HttpResponsePtr &)> Callback;
 
@@ -23,7 +23,9 @@ public:
   void indexHandler(const drogon::HttpRequestPtr &request,
                     Callback &&callback) {
     Json::Value jsonBody;
-    jsonBody["message"] = std::time(nullptr);
+
+    // jsonBody["message"] = std::time(nullptr);
+    jsonBody["state"] = JsonPicker(filePath);
 
     auto response = drogon::HttpResponse::newHttpJsonResponse(jsonBody);
     callback(response);
@@ -39,7 +41,6 @@ public:
   }
 
   void DragonApp() {
-    // std::thread fileWatcherThread(watchFile, filePath, std::ref(changer));
 
     drogon::app()
         .registerHandler("/state", &Hand::indexHandler, {drogon::Get})
@@ -48,12 +49,9 @@ public:
         .setThreadNum(8)
         .registerPostHandlingAdvice([](const drogon::HttpRequestPtr &req,
                                        const drogon::HttpResponsePtr &resp) {
-          // LOG_DEBUG << "postHandling1";
           resp->addHeader("Access-Control-Allow-Origin", "*");
         })
         .run();
-
-    // fileWatcherThread.join();
   }
 };
 
