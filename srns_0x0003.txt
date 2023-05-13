@@ -12,7 +12,7 @@ er not found
 |NS->    0.000000  [!] QuadHeterodynqweqweqweqe not found
 |NS->    0.000000  [!] ADC Interconnect not found
 |NS->    0.000000  [!] Decimator not foundqweqweqwe
-|NS->    0.000000  [!] Compressor not foundqweqweqwe
+|NS->    0.000000  [!] Compressor not found
 |NS->    0.000000  New sqweqweqweqwepace-time position is added: 0
 |NS->    0.000000  Ref[0]qweqeqwe: 55.755383 37.708334 deg, 163.586 m, 0.000000000 s, 0.000 0.000 0.000 0.000 m/s 0.10 m
 |NS->    0.000000  TX[0]: 55.75qweqweqweqw5383 37.708334 degqweqweqwewq, 163.586 m, 0.000000000 s, 0.000 0.000 0.000 0.000 m/s 0.10 m
@@ -7070,8 +7070,8 @@ fThe emitter will use orbTx ephemeris
 |NS->  301.000082  Solv[1LCT]: 2022/02/13 06:05:00.000000000 55.755382620, 37.708334280 deg, h=163.586 m, 4/4 SVs, Res=0.13 m, r2s=-0.0+-0.8 ns +0.0+-5e+02 m/s, PDOP=0.0, E=333.6 m at 301.000
 |NS->  301.000082  Solv[2LCT]: 2022/02/13 06:05:00.000000000 55.755382620, 37.708334280 deg, h=163.586 m, 4/4 SVs, Res=0.23 m, r2s=+0.4+-1.1 ns +0.0+-5e+02 m/s, PDOP=0.0, E=333.6 m at 301.000
 |NS->  301.000082  Solv[3GPS]: 2022/02/13 06:05:00.000000000 55.755378517, 37.708331886 deg, h=163.297 m, 6/6 SVs, Res=0.04 m, r2s=+0.4+-0.1 ns +0.0+-5e+02 m/s, PDOP=2.3, E=333.7 m at 301.000
-|NS->  301.000082  Solv[3LCT]: 2022/02/13 06:05:00.000000000 55.755599800, 37.708219240 deg, h=163.429 m, 4/4 SVs, Res=0.21 m, r2s=+83.1+-83391023.8 ns +0.0+-5e+02 m/s, PDOP=0.0, E=317.0 m at 301.000
-|NS->  301.000082  Solv[4LCT]: 2022/02/13 06:05:00.000000000 55.755382620, 37.708334280 deg, h=163.586 m, 4/4 SVs, Res=0.20 m, r2s=+0.1+-1.0 ns +0.0+-1e+05 m/s, PDOP=0.0, E=333.6 m at 301.000
+|NS->  301.000082  Solv[3LCT]: 2022/02/13 06:05:00.000000000 55.795599891, 37.708219240 deg, h=183.429 m, 4/4 SVs, Res=0.21 m, r2s=+83.1+-83391023.8 ns +0.0+-5e+02 m/s, PDOP=0.0, E=317.0 m at 301.001
+|NS->  301.000082  Solv[4LCT]: 2022/02/13 06:05:00.000000000 55.755382620, 37.708334280 deg, h=163.586 m, 4/4 SVs, Res=0.20 m, r2s=+0.1+-1.0 ns +0.0+-1e+05 m/s, PDOP=0.0, E=333.6 m at 301.001
 |NS->  301.000082  4 LCT №  1  Resid: -0.224367 ns (-0.067264 m), dtau = 0.111434 ns
 |NS->  301.000082  4 LCT №  3  Resid: 0.375395 ns (0.112541 m), dtau = 0.111434 ns
 |NS->  301.000082  4 LCT №  5  Resid: -1.143016 ns (-0.342668 m), dtau = 0.111434 ns

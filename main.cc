@@ -57,17 +57,17 @@ public:
 
 int main() {
   std::string filePath = "../srns_0x0003.txt";
-  std::cout << "Enter path of file srns_0x0003.txt" << std::endl;
-  std::cin >> filePath;
+  // std::cout << "Enter path of file srns_0x0003.txt" << std::endl;
+  // std::cin >> filePath;
 
-  if (filePath.empty() || filePath == "std") {
-    std::cout << "Standart path choose: "
-                 "../srns_0x0003.txt"
-              << std::endl;
-    filePath = "../srns_0x0003.txt";
-  } else {
-    std::cout << "The path will be: " + filePath << std::endl;
-  }
+  // if (filePath.empty() || filePath == "std") {
+  //   std::cout << "Standart path choose: "
+  //                "../srns_0x0003.txt"
+  //             << std::endl;
+  //   filePath = "../srns_0x0003.txt";
+  // } else {
+  //   std::cout << "The path will be: " + filePath << std::endl;
+  // }
   Hand handObj{filePath};
   handObj.DragonApp();
 
