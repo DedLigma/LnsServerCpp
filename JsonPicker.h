@@ -1,10 +1,11 @@
+#include <json/json.h>
+#include <json/value.h>
+
 #include <algorithm>
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <iterator>
-#include <json/json.h>
-#include <json/value.h>
 #include <ostream>
 #include <string>
 #include <vector>
@@ -62,8 +63,9 @@ inline void LctHandler(std::vector<std::string> &lctLines,
   Json::Value residsArr;
   Json::Value timeDataArr;
   Json::Value timerArr;
-
-  for (int i = 0; i < lctLines.size(); i++) {
+  int startI = 0;
+  if (lctLines.size() > 500) startI = 500;
+  for (int i = startI; i < lctLines.size(); i++) {
     if (lctLines[i].find("NavMsgLctLxOCoord") != std::string::npos ||
         lctLines[i].find("NavMsgLctLxOResids") != std::string::npos ||
         lctLines[i].find("NavMsgLctLxONewFrame:") != std::string::npos) {
@@ -88,21 +90,19 @@ inline void LctHandler(std::vector<std::string> &lctLines,
             lctSplittedLine[14 - spaceFix].end() - 1,
             lctSplittedLine[14 - spaceFix].end());
 
-        typeChanger = atof(lctSplittedLine[14-spaceFix].c_str());
+        typeChanger = atof(lctSplittedLine[14 - spaceFix].c_str());
         latitudeArr[indexLct] = typeChanger;
 
         lctSplittedLine[15 - spaceFix].erase(
             lctSplittedLine[15 - spaceFix].end() - 1,
             lctSplittedLine[15 - spaceFix].end());
 
-typeChanger = atof(lctSplittedLine[15-spaceFix].c_str());
+        typeChanger = atof(lctSplittedLine[15 - spaceFix].c_str());
         longtudeArr[indexLct] = typeChanger;
 
         heightArr[indexLct] = lctSplittedLine[16 - spaceFix];
       }
 
-      // std::cout << lctSplittedLine[17] << " " << lctSplittedLine[18] <<
-      // std::endl;
       if (lctLines[i].find("NavMsgLctLxONewFrame:") != std::string::npos) {
         Json::Value::ArrayIndex spaceFix =
             strcmp(lctSplittedLine[11].c_str(), "") != 0 ? 0 : 1;
@@ -113,6 +113,14 @@ typeChanger = atof(lctSplittedLine[15-spaceFix].c_str());
       }
 
       if (lctLines[i].find("NavMsgLctLxOResids") != std::string::npos) {
+        lctSplittedLine.erase(lctSplittedLine.begin() + 19);
+        for (int j = 14; j < lctSplittedLine.size(); j++) {
+          Json::Value::ArrayIndex firstIndex =
+              atoi(lctSplittedLine[11].c_str());
+          Json::Value::ArrayIndex secondIndex = j - 14;
+          residsArr[firstIndex][secondIndex] = atoi(lctSplittedLine[j].c_str());
+          residsArr[firstIndex][0] = Json::nullValue;
+        }
       }
 
       for (int i = 0; i < residsIntNumbers.size(); i++) {
@@ -126,17 +134,14 @@ typeChanger = atof(lctSplittedLine[15-spaceFix].c_str());
       jsonData["Lct"]["height"] = heightArr;
       jsonData["Lct"]["time_data"] = timeDataArr;
       jsonData["Lct"]["timer"] = timerArr;
+      jsonData["Lct"]["resids"] = residsArr;
     }
   }
 }
 
 inline Json::Value JsonPicker(std::string &srnsFilePath) {
-  std::ifstream jsonState;
-  jsonState.open("../state.json");
-  Json::Reader reader;
   Json::Value jsonData;
 
-  reader.parse(jsonState, jsonData);
   std::ifstream srnsFile;
   srnsFile.open(srnsFilePath);
 
@@ -146,7 +151,6 @@ inline Json::Value JsonPicker(std::string &srnsFilePath) {
   for (std::string line; std::getline(srnsFile, line);) {
     if (line.find("Solv[") != std::string::npos) {
       SolvHandler(line, jsonData);
-      // std::cout << line << std::endl;
     }
     if (line.find("Lct") != std::string::npos) {
       lctLines.push_back(line);

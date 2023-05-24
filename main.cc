@@ -1,31 +1,25 @@
 // #include "Headers.h"
+#include <drogon/drogon.h>
+
+#include <cstdlib>
+#include <string>
+
 #include "FileWatcher.h"
 #include "JsonPicker.h"
-#include <cstdlib>
-#include <drogon/drogon.h>
-#include <string>
 
 typedef std::function<void(const drogon::HttpResponsePtr &)> Callback;
 
 class Hand {
-public:
+ public:
   int changer = 1;
-  std::string filePath = "../srns_0x0003.txt";
-  std::time_t lastWriteTime;
-
-  Hand(std::string filePath) {
-
-    this->lastWriteTime = boost::filesystem::last_write_time(filePath);
-  }
-
-  Hand() {}
+  std::string filePath = "/tmp/srns_0x0003.txt";
+  std::time_t lastWriteTime = 0;
 
   void indexHandler(const drogon::HttpRequestPtr &request,
                     Callback &&callback) {
     Json::Value jsonBody;
 
-    // jsonBody["message"] = std::time(nullptr);
-    jsonBody["state"] = JsonPicker(filePath);
+    jsonBody["state"] = JsonPicker(this->filePath);
 
     auto response = drogon::HttpResponse::newHttpJsonResponse(jsonBody);
     callback(response);
@@ -33,7 +27,6 @@ public:
 
   void changeHandler(const drogon::HttpRequestPtr &request,
                      Callback &&callback) {
-
     this->changer =
         watchFile(this->filePath, this->changer, this->lastWriteTime);
     auto response = drogon::HttpResponse::newHttpJsonResponse(this->changer);
@@ -41,7 +34,6 @@ public:
   }
 
   void DragonApp() {
-
     drogon::app()
         .registerHandler("/state", &Hand::indexHandler, {drogon::Get})
         .registerHandler("/change", &Hand::changeHandler, {drogon::Get})
@@ -56,19 +48,7 @@ public:
 };
 
 int main() {
-  std::string filePath = "../srns_0x0003.txt";
-  // std::cout << "Enter path of file srns_0x0003.txt" << std::endl;
-  // std::cin >> filePath;
-
-  // if (filePath.empty() || filePath == "std") {
-  //   std::cout << "Standart path choose: "
-  //                "../srns_0x0003.txt"
-  //             << std::endl;
-  //   filePath = "../srns_0x0003.txt";
-  // } else {
-  //   std::cout << "The path will be: " + filePath << std::endl;
-  // }
-  Hand handObj{filePath};
+  Hand handObj;
   handObj.DragonApp();
 
   return EXIT_SUCCESS;
