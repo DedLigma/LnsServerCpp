@@ -33,6 +33,19 @@ add_executable(${PROJECT_NAME} main.cc)
 find_package(Drogon CONFIG REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE Drogon::Drogon)
 
+# add_subdirectory(libssl.so.1.1)
+# find_library(libssl.so.1.1 libssl.so.1.1)
+# target_link_libraries(${PROJECT_NAME} PRIVATE libssl.so.1.1)
+
+# find_package(PkgConfig REQUIRED)
+# pkg_check_modules(LIBRARY_NAME REQUIRED library_name)
+include_directories(${LIBRARY_NAME_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} ${LIBRARY_NAME_LIBRARIES})
+
+
+
+
+
 # ##############################################################################
 
 if (CMAKE_CXX_STANDARD LESS 17)
@@ -76,5 +89,4 @@ target_sources(${PROJECT_NAME}
 # set_property(TARGET ${PROJECT_NAME} PROPERTY ENABLE_EXPORTS ON)
 
 # ##############################################################################
-
 add_subdirectory(test)
