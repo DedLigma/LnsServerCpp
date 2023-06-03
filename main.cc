@@ -47,6 +47,7 @@ class Hand {
 };
 
 int main() {
+  std::cout << "Server is start \n";
   Hand handObj;
   handObj.DragonApp();
 

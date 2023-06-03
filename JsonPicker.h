@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iostream>
 #include <iterator>
+#include <list>
 #include <ostream>
 #include <string>
 #include <vector>
@@ -53,7 +54,7 @@ inline void SolvHandler(std::string &line, Json::Value &jsonData) {
   jsonData["Solv"]["appar_counter"] = splittedLine[24];
 }
 
-inline void LctHandler(std::vector<std::string> &lctLines,
+inline void LctHandler(std::list<std::string> &lctLines,
                        std::ifstream &srnsFile, Json::Value &jsonData) {
   std::vector<int> residsIntNumbers;
   Json::Value numberArr;
@@ -64,23 +65,22 @@ inline void LctHandler(std::vector<std::string> &lctLines,
   Json::Value timeDataArr;
   Json::Value timerArr;
   int startI = 0;
-  if (lctLines.size() > 500) startI = 500;
-  for (int i = startI; i < lctLines.size(); i++) {
-    if (lctLines[i].find("NavMsgLctLxOCoord") != std::string::npos ||
-        lctLines[i].find("NavMsgLctLxOResids") != std::string::npos ||
-        lctLines[i].find("NavMsgLctLxONewFrame:") != std::string::npos) {
+  for (auto iter : lctLines) {
+    if (iter.find("NavMsgLctLxOCoord") != std::string::npos ||
+        iter.find("NavMsgLctLxOResids") != std::string::npos ||
+        iter.find("NavMsgLctLxONewFrame:") != std::string::npos) {
       std::vector<std::string> lctSplittedLine;
       lctSplittedLine.clear();
-      StringSplitter(lctLines[i], lctSplittedLine);
+      StringSplitter(iter, lctSplittedLine);
 
       if (!std::count(residsIntNumbers.begin(), residsIntNumbers.end(),
-                      atoi(lctSplittedLine[11].c_str())) &&
-          strcmp(lctSplittedLine[11].c_str(), "") != 0) {
-        residsIntNumbers.push_back(atoi(lctSplittedLine[11].c_str()));
+                      atoi(lctSplittedLine[10].c_str())) &&
+          strcmp(lctSplittedLine[10].c_str(), "") != 0) {
+        residsIntNumbers.push_back(atoi(lctSplittedLine[10].c_str()));
       }
       sort(residsIntNumbers.begin(), residsIntNumbers.end());
 
-      if (lctLines[i].find("NavMsgLctLxOCoord") != std::string::npos) {
+      if (iter.find("NavMsgLctLxOCoord") != std::string::npos) {
         Json::Value::ArrayIndex spaceFix =
             strcmp(lctSplittedLine[11].c_str(), "") != 0 ? 0 : 1;
         Json::Value::ArrayIndex indexLct =
@@ -102,8 +102,7 @@ inline void LctHandler(std::vector<std::string> &lctLines,
 
         heightArr[indexLct] = lctSplittedLine[16 - spaceFix];
       }
-
-      if (lctLines[i].find("NavMsgLctLxONewFrame:") != std::string::npos) {
+      if (iter.find("NavMsgLctLxONewFrame:") != std::string::npos) {
         Json::Value::ArrayIndex spaceFix =
             strcmp(lctSplittedLine[11].c_str(), "") != 0 ? 0 : 1;
         Json::Value::ArrayIndex indexLct =
@@ -112,14 +111,14 @@ inline void LctHandler(std::vector<std::string> &lctLines,
         timerArr[indexLct] = lctSplittedLine[18 - spaceFix];
       }
 
-      if (lctLines[i].find("NavMsgLctLxOResids") != std::string::npos) {
+      if (iter.find("NavMsgLctLxOResids") != std::string::npos) {
         lctSplittedLine.erase(lctSplittedLine.begin() + 19);
         for (int j = 14; j < lctSplittedLine.size(); j++) {
           Json::Value::ArrayIndex firstIndex =
-              atoi(lctSplittedLine[11].c_str());
+              atoi(lctSplittedLine[10].c_str());
           Json::Value::ArrayIndex secondIndex = j - 14;
-          residsArr[firstIndex][secondIndex] = atoi(lctSplittedLine[j].c_str());
           residsArr[firstIndex][0] = Json::nullValue;
+          residsArr[firstIndex][secondIndex] = atoi(lctSplittedLine[j].c_str());
         }
       }
 
@@ -145,7 +144,7 @@ inline Json::Value JsonPicker(std::string &srnsFilePath) {
   std::ifstream srnsFile;
   srnsFile.open(srnsFilePath);
 
-  std::vector<std::string> lctLines;
+  std::list<std::string> lctLines;
   lctLines.clear();
 
   for (std::string line; std::getline(srnsFile, line);) {
@@ -154,6 +153,9 @@ inline Json::Value JsonPicker(std::string &srnsFilePath) {
     }
     if (line.find("Lct") != std::string::npos) {
       lctLines.push_back(line);
+      if(lctLines.size() > 100){
+        lctLines.pop_front();
+      }
     }
   }
   LctHandler(lctLines, srnsFile, jsonData);

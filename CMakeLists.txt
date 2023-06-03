@@ -3,7 +3,7 @@ project(LnsServerCpp CXX)
 
 include(CheckIncludeFileCXX)
 
-
+set(CMAKE_DEBUG_POSTFIX d)
 
 check_include_file_cxx(any HAS_ANY)
 check_include_file_cxx(string_view HAS_STRING_VIEW)
