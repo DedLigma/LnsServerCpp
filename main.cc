@@ -1,8 +1,6 @@
 #include <drogon/drogon.h>
-
 #include <cstdlib>
 #include <string>
-
 #include "FileWatcher.h"
 #include "JsonPicker.h"
 

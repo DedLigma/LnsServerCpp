@@ -74,8 +74,12 @@ inline void LctHandler(std::list<std::string> &lctLines,
       StringSplitter(iter, lctSplittedLine);
 
       if (!std::count(residsIntNumbers.begin(), residsIntNumbers.end(),
-                      atoi(lctSplittedLine[10].c_str())) &&
-          strcmp(lctSplittedLine[10].c_str(), "") != 0) {
+                      atoi(lctSplittedLine[11].c_str())) &&
+          strcmp(lctSplittedLine[11].c_str(), "") != 0) {
+        residsIntNumbers.push_back(atoi(lctSplittedLine[11].c_str()));
+      } else if (!std::count(residsIntNumbers.begin(), residsIntNumbers.end(),
+                             atoi(lctSplittedLine[10].c_str())) &&
+                 strcmp(lctSplittedLine[10].c_str(), "") != 0) {
         residsIntNumbers.push_back(atoi(lctSplittedLine[10].c_str()));
       }
       sort(residsIntNumbers.begin(), residsIntNumbers.end());
@@ -114,8 +118,12 @@ inline void LctHandler(std::list<std::string> &lctLines,
       if (iter.find("NavMsgLctLxOResids") != std::string::npos) {
         lctSplittedLine.erase(lctSplittedLine.begin() + 19);
         for (int j = 14; j < lctSplittedLine.size(); j++) {
-          Json::Value::ArrayIndex firstIndex =
-              atoi(lctSplittedLine[10].c_str());
+          Json::Value::ArrayIndex firstIndex;
+          if (atoi(lctSplittedLine[11].c_str()) != 0) {
+            firstIndex = atoi(lctSplittedLine[11].c_str());
+          } else {
+            firstIndex = atoi(lctSplittedLine[10].c_str());
+          }
           Json::Value::ArrayIndex secondIndex = j - 14;
           residsArr[firstIndex][0] = Json::nullValue;
           residsArr[firstIndex][secondIndex] = atoi(lctSplittedLine[j].c_str());
@@ -143,21 +151,23 @@ inline Json::Value JsonPicker(std::string &srnsFilePath) {
 
   std::ifstream srnsFile;
   srnsFile.open(srnsFilePath);
-
+  std::string solvString;
   std::list<std::string> lctLines;
   lctLines.clear();
 
   for (std::string line; std::getline(srnsFile, line);) {
     if (line.find("Solv[") != std::string::npos) {
-      SolvHandler(line, jsonData);
+      solvString = line;
     }
     if (line.find("Lct") != std::string::npos) {
       lctLines.push_back(line);
-      if(lctLines.size() > 100){
+      if (lctLines.size() > 300) {
         lctLines.pop_front();
       }
     }
   }
+
+  SolvHandler(solvString, jsonData);
   LctHandler(lctLines, srnsFile, jsonData);
 
   return jsonData;
